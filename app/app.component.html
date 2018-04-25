@@ -1,0 +1,60 @@
+<br>
+<section class="todoapp">
+    <header class="header">
+        <h1>Todos</h1>
+        <input class="new-todo" placeholder="What needs to be done?" autofocus="" [(ngModel)]="newTodo.title" (keyup.enter)="addTodo()">
+    </header>
+    <section class="main" *ngIf="todos.length > 0">
+        <ul class="todo-list">
+            <li *ngFor="let todo of todos" [class.completed]="todo.complete">
+                <div class="view">
+                    <div class="row">
+
+
+                        <div class="col-md-2">
+                            <input class="toggle" type="checkbox" (click)="toggleTodoComplete(todo)" [checked]="todo.complete">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label>{{todo.title}}</label>
+                        </div>
+                        <div class="col-md-2"><button class="destroy" (click)="removeTodo(todo)"></button></div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="span4 offset4">
+                            <label class="duedate">Due Date</label>
+                        </div>
+                        <div class="span4 offset4">
+
+                            <form class="form-date" #myForm="ngForm" novalidate>
+
+                                <my-date-picker [ngStyle]="getColor(todo.colorDate)" name="mydate" [selDate]="selDate" [options]="myDatePickerOptions" (dateChanged)="onDateChanged($event,todo)"></my-date-picker>
+                            </form>
+                        </div>
+                        <div class="span4 offset4">
+                            <label class="duedate">Priority</label>
+                        </div>
+                        <div class="span4 offset4">
+
+                            <select class="form-control" id="priority" required [(ngModel)]="todo.priority" name="priority" #priority="ngModel">
+                          <option *ngFor="let priority of priorities" [value]="priority">{{priority}}</option>
+                        </select>
+
+
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </section>
+    <footer class="footer " *ngIf="todos.length> 0">
+        <span class="todo-count"><strong>{{todos.length}}</strong> {{todos.length == 1 ? 'item' : 'items'}} left</span>
+    </footer>
+</section>
